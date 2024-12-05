@@ -1,45 +1,76 @@
-import 'package:ecommerce/ui/SigninPage.dart';
+import 'package:ecommerce/CategoryBloc/CategoryBloc.dart';
+import 'package:ecommerce/Login/login_bloc.dart';
+import 'package:ecommerce/Prouct_Boc/prodcutbloc.dart';
+import 'package:ecommerce/UserData/UserProfileBloc.dart';
+import 'package:ecommerce/UserData/UserProfileState.dart';
+import 'package:ecommerce/cart/cartBloc.dart';
+import 'package:ecommerce/create_order/create_order_bloc.dart';
+import 'package:ecommerce/getAllOrderBloc/getALLorderBloc.dart';
+import 'package:ecommerce/registration/SigninPage.dart';
+import 'package:ecommerce/registration/registration_bloc.dart';
+import 'package:ecommerce/remote/api_helper.dart';
 import 'package:ecommerce/ui/cart_page.dart';
 import 'package:ecommerce/ui/detail_page.dart';
 import 'package:ecommerce/ui/homepage.dart';
 import 'package:ecommerce/ui/nav_page.dart';
+import 'package:ecommerce/ui/profilePage.dart';
 import 'package:ecommerce/ui/splash_page.dart';
 import 'package:ecommerce/utils/custom%20widget.dart';
+import 'package:ecommerce/view_cart/ViewCartBloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
-  runApp(const MyApp());
+  return runApp(
+
+   MultiBlocProvider(providers: [
+     BlocProvider<RegisterUserBloc>(create: (context)=>RegisterUserBloc(apiHelper: ApiHelper())),
+
+     BlocProvider(create: (context)=>LoginBloc(apiHelper: ApiHelper())),
+
+     BlocProvider(create: (context)=>ProductBloc(apiHelper: ApiHelper())),
+     BlocProvider(create: (context)=>CategoryBloc(apiHelper: ApiHelper())),
+     BlocProvider(create: (context)=>CartBloc(apiHelper: ApiHelper())),
+
+     BlocProvider(create: (context)=>ViewCartBloc(apiHelper: ApiHelper())),
+     BlocProvider(create: (context)=>CreateOrderBloc(apiHelper: ApiHelper())),
+     BlocProvider(create: (context)=>GetAllOrderBloc(apiHelper: ApiHelper())),
+     BlocProvider(create: (context)=>UserProfileBloc(apiHelper: ApiHelper())),
+
+
+
+   ], child: MyApp())
+
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home:   Signinpage()
+      home:SplashPage(),
     );
   }
 }
+class UserDataShow extends StatefulWidget {
+  const UserDataShow({super.key});
 
+  @override
+  State<UserDataShow> createState() => _UserDataShowState();
+}
+
+class _UserDataShowState extends State<UserDataShow> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: BlocBuilder<UserProfileBloc,UserProfileState>(builder: (context,state){
+
+        if(state is UserProfileLoadedState){
+          return ListView.builder(itemBuilder: (_,index){});
+        }
+        return Container();
+      }),
+    );
+  }
+}

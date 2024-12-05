@@ -1,8 +1,9 @@
-import 'package:ecommerce/ui/SigninPage.dart';
+import 'package:ecommerce/registration/SigninPage.dart';
 import 'package:ecommerce/ui/cart_page.dart';
 import 'package:ecommerce/ui/detail_page.dart';
+import 'package:ecommerce/ui/favourite.dart';
 import 'package:ecommerce/ui/homepage.dart';
-import 'package:ecommerce/ui/logInPage.dart';
+import 'package:ecommerce/Login/logInPage.dart';
 import 'package:ecommerce/ui/profilePage.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,7 @@ class NavPage extends StatefulWidget {
 
 class _NavPageState extends State<NavPage> {
   int currindx=0;
-  List pages =[HomePage(),DetailPage(),CartScreen(),Profilepage()];
+  List pages =[HomePage(),Favourites(),CartScreen(),profilePage()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +26,9 @@ class _NavPageState extends State<NavPage> {
       FloatingActionButton(
         shape:CircleBorder(),
         backgroundColor: Colors.deepOrange,
-        onPressed: (){},child: Icon(Icons.home,color: Colors.white,),),
+        onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder:(_)=>HomePage()));
+        },child: Icon(Icons.home,color: Colors.white,),),
       bottomNavigationBar: BottomAppBar(
 
         shape: CircularNotchedRectangle(),

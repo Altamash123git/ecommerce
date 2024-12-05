@@ -1,4 +1,5 @@
 import 'package:ecommerce/Appconstants/colors.dart';
+import 'package:ecommerce/utils/decoration.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -7,12 +8,12 @@ class CustomWidget extends StatefulWidget {
   String imgpath;
   bool isfavourite;
   String title;
-  num amt;
+  String amt;
   //bool isrecentlyadded;
 
   double mheight;
 
-  CustomWidget({ required this.imgpath , this.mwidth=200, this.mheight=350,  this.isfavourite=false, required this.title,required this.amt});
+  CustomWidget({ required this.imgpath , this.mwidth=200, this.mheight=200,  this.isfavourite=false, required this.title,required this.amt});
 
 
   @override
@@ -31,7 +32,7 @@ class _CustomWidgetState extends State<CustomWidget> {
               decoration: BoxDecoration(
                 color: AppColors.primaryColor,
                 borderRadius: BorderRadius.circular(8),
-                image: DecorationImage(image: NetworkImage(widget.imgpath,),fit: BoxFit.cover)
+                image: DecorationImage(image: NetworkImage(widget.imgpath,),fit: BoxFit.cover),
               ),
             ),
             widget.isfavourite? Align(child: Container(
@@ -55,7 +56,7 @@ class _CustomWidgetState extends State<CustomWidget> {
                     children: [
                       Text(widget.title),
                       SizedBox(height: 10,),
-                      Text(widget.amt.toString())
+                      Text(widget.amt.toString(),style: mTextStyle22(),)
                     ],
                   ),
                 ),

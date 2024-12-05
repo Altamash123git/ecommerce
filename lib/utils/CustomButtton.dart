@@ -47,10 +47,8 @@ class CustomButton extends StatelessWidget {
         child: isLoading ? Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircularProgressIndicator(
-
-            ),
-            SizedBox(width: 4,),
+            CircularProgressIndicator(),
+            SizedBox(width: 7,),
             Text(loadingMsg)
           ],
         ) : Text(
