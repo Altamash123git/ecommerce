@@ -1,4 +1,5 @@
 import 'package:ecommerce/registration/SigninPage.dart';
+import 'package:ecommerce/ui/OrderPage.dart';
 import 'package:ecommerce/ui/cart_page.dart';
 import 'package:ecommerce/ui/detail_page.dart';
 import 'package:ecommerce/ui/favourite.dart';
@@ -6,6 +7,8 @@ import 'package:ecommerce/ui/homepage.dart';
 import 'package:ecommerce/Login/logInPage.dart';
 import 'package:ecommerce/ui/profilePage.dart';
 import 'package:flutter/material.dart';
+
+import '../main.dart';
 
 class NavPage extends StatefulWidget {
   const NavPage({super.key});
@@ -16,7 +19,7 @@ class NavPage extends StatefulWidget {
 
 class _NavPageState extends State<NavPage> {
   int currindx=0;
-  List pages =[HomePage(),Favourites(),CartScreen(),profilePage()];
+  List pages =[HomePage(),MyOrderPage(),CartScreen(),profilePage()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

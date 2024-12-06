@@ -11,5 +11,5 @@ class Urls{
   static final String FETCH_CART_URL = "${BASE_URL}product/view-cart";
   static final String CREATE_ORDER_URL = "${BASE_URL}product/create-order";
   static final String GET_PLACED_ORDER = "${BASE_URL}product/get-order";
-  static final String USER_PROFILE_URL = "${USER_URL}user/profile";
+  static final String USER_PROFILE_URL = "${BASE_URL}user/profile";
 }

@@ -7,7 +7,7 @@ abstract class  UserProfileState{}
  }
  class UserProfileLoadingState extends UserProfileState{}
  class UserProfileLoadedState extends UserProfileState{
-  UserData data;
+  UserDataModel data;
   UserProfileLoadedState({required this.data});
  }
  class UserProfileErrorState extends UserProfileState{

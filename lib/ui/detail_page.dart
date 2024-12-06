@@ -3,6 +3,7 @@ import 'package:ecommerce/Models/productModel.dart';
 import 'package:ecommerce/cart/CartState.dart';
 import 'package:ecommerce/cart/cartBloc.dart';
 import 'package:ecommerce/cart/cartEvent.dart';
+import 'package:ecommerce/ui/nav_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -664,7 +665,7 @@ class _DetailPageState extends State<DetailPage> {
                     }
 
                     if (state is CartLoadedState) {
-                      Navigator.pop(context);
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder:(_)=> NavPage()));
                       ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text("Product added successfully!!",style: mTextStyle12(mcolor: Colors.green),)));
                     }

@@ -4,6 +4,7 @@ import 'package:ecommerce/Models/view_cart_model.dart';
 import 'package:ecommerce/cart/cartBloc.dart';
 import 'package:ecommerce/create_order/create_order_bloc.dart';
 import 'package:ecommerce/create_order/create_order_state.dart';
+import 'package:ecommerce/ui/nav_page.dart';
 import 'package:ecommerce/utils/decoration.dart';
 import 'package:ecommerce/view_cart/ViewCartBloc.dart';
 import 'package:ecommerce/view_cart/ViewCartEvent.dart';
@@ -128,7 +129,7 @@ class _CartScreenState extends State<CartScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Order placed successfully!')),
           );
-          Navigator.pop(context); // Navigate to another screen if needed
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>NavPage())); // Navigate to another screen if needed
         } else if (state is CreateOrderFailureState) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Failed to place order: ${state.errorMsg}')),
@@ -303,135 +304,7 @@ class _CartScreenState extends State<CartScreen> {
  totalBill+=totalAfterSGST;
 
   }
- /* Widget gettotalContainer() {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.only(bottom: 11),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(31),
-        color: Colors.white,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            getTextfieldWidget(),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Subtotal',
-                  style:
-                  TextStyle(fontSize: 18, color: const Color(0xFFA0A0A0)),
-                ),
-                Text(
-                  '\$${subtotal.toStringAsFixed(2)}',
-                  style: TextStyle(
-                      fontSize: 18,
-                      color: const Color(0xFF040D18),
-                      fontWeight: FontWeight.w700),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Discount (${discountPer*100}%)',
-                  style:
-                  TextStyle(fontSize: 18, color: const Color(0xFFA0A0A0)),
-                ),
-                Text(
-                  '- \$${totalDiscount.toStringAsFixed(2)}',
-                  style: TextStyle(
-                      fontSize: 18,
-                      color: const Color(0xFF040D18),
-                      fontWeight: FontWeight.w700),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Tax(CGST - ${cgst*100}%)',
-                  style:
-                  TextStyle(fontSize: 18, color: const Color(0xFFA0A0A0)),
-                ),
-                Text(
-                  '+ \$${totalAfterCGST.toStringAsFixed(2)}',
-                  style: TextStyle(
-                      fontSize: 18,
-                      color: const Color(0xFF040D18),
-                      fontWeight: FontWeight.w700),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Tax(SGST - ${sgst*100}%)',
-                  style:
-                  TextStyle(fontSize: 18, color: const Color(0xFFA0A0A0)),
-                ),
-                Text(
-                  '+ \$${totalAfterSGST.toStringAsFixed(2)}',
-                  style: TextStyle(
-                      fontSize: 18,
-                      color: const Color(0xFF040D18),
-                      fontWeight: FontWeight.w700),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
-              child: Divider(
-                color:
-                Colors.grey, // You can change the color to suit your design
-                thickness: 2, // Adjust the thickness of the line
-                indent: 0, // Space before the divider starts
-                endIndent: 0, // Space after the divider ends
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Total',
-                  style:
-                  TextStyle(fontSize: 16, color: const Color(0xFF3A4147)),
-                ),
-                Text(
-                  '\$${totalBill}',
-                  style: TextStyle(
-                      fontSize: 18,
-                      color: const Color(0xFF040D18),
-                      fontWeight: FontWeight.w700),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Center(
-              child: CustomButton(
-                width: double.infinity,
-                text: 'Checkout',
-                textStyle: TextStyle(fontSize: 20, color: Colors.white),
-                onPressed: () {},
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-*/
+
 
   Widget getTextfieldWidget() {
     return TextField(

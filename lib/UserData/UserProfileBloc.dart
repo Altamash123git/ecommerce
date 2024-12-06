@@ -10,18 +10,17 @@ class UserProfileBloc extends Bloc<UserProfileEvent,UserProfileState> {
   UserProfileBloc({required this.apiHelper}):super(UserProfileInitialState()){
     
     on<GetUserProfileEvent>((event,emit)async{
-      try{
-        
-        emit(UserProfileLoadingState());
-        var res= await apiHelper.PostApi(url: Urls.USER_PROFILE_URL);
-        if(res["status"]=="true" || res["status"]){
-          emit(UserProfileLoadedState(data: UserData.fromJson(res)));
+      try {
+        var res = await apiHelper.PostApi(url: Urls.USER_PROFILE_URL);
+        print("API Response: $res");
 
-        }else{
-          emit(UserProfileErrorState(errorMsg: res["message"]));
-
+        if (res["status"] == "true" || res["status"] == true) {
+          emit(UserProfileLoadedState(data: UserDataModel.fromJson(res)));
+        } else {
+          emit(UserProfileErrorState(errorMsg: res["message"] ?? "Unknown error"));
         }
-      }catch(e){
+      } catch (e) {
+        print("Error: $e");
         emit(UserProfileErrorState(errorMsg: e.toString()));
       }
     });

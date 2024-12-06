@@ -5,11 +5,13 @@ class UserDataModel {
 
   UserDataModel({required  this.status,required  this.data,required  this.message});
 
-  factory UserDataModel.fromJson(Map<String,dynamic>json){
-    return UserDataModel(status: json["status"], data: json["data"], message: json["message"]);
-
+  factory UserDataModel.fromJson(Map<String, dynamic> json) {
+    return UserDataModel(
+      status: json["status"] == "true" || json["status"] == true,
+      message: json["message"],
+      data: json["data"] != null ? UserData.fromJson((json["data"] as Map).cast<String, dynamic>()) : null,
+    );
   }
-
 }
 
 class UserData{

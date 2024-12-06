@@ -12,6 +12,6 @@ class GetOrderErrorState extends GetAllOrderState{
 }
 class GetOrderLoadedState extends GetAllOrderState{
 
-  List<OrdersPlaced >order;
+  List<OrdersPlaced>order;
   GetOrderLoadedState({required this.order});
 }

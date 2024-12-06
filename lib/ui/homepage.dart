@@ -209,7 +209,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             return Container(
-              child: Text("hulelele"),
+
             );
           } ),
              SizedBox(height: 5,),
@@ -270,7 +270,7 @@ class _HomePageState extends State<HomePage> {
                   }
 
                   return Container(
-                    child: Text("hlo"),
+
                   );
                 }),
               ),

@@ -1,10 +1,16 @@
+import 'package:ecommerce/Appconstants/colors.dart';
+import 'package:ecommerce/UserData/UserProfileBloc.dart';
+import 'package:ecommerce/UserData/UserProfileState.dart';
 import 'package:ecommerce/getAllOrderBloc/getALLorderBloc.dart';
 import 'package:ecommerce/getAllOrderBloc/getAllOrderState.dart';
+import 'package:ecommerce/utils/decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../Appconstants/Theme_manager.dart';
 import '../Appconstants/provider_image.dart';
 import '../Login/logInPage.dart';
+import '../UserData/UserProfileEvent.dart';
 import '../getAllOrderBloc/getAllOrderEvent.dart';
 
 import 'dart:io';
@@ -66,176 +72,204 @@ class _profilePageState extends State<profilePage> {
   XFile? imgPicked;
   bool isCamera=false;
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<UserProfileBloc>().add(GetUserProfileEvent());
+  }
+  @override
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(),
+
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text.rich(
-                      textAlign: TextAlign.center,
-                      TextSpan( text: "12\n",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+        child:
+        BlocBuilder<UserProfileBloc,UserProfileState>(
+          builder: (_,state){
+            if(state is UserProfileLoadingState){
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if(state is UserProfileErrorState){
+              return Center(
+                child: Text(state.errorMsg,style: mTextStyle18(mcolor: Colors.red),),
+              );
+            }
+            if(state is UserProfileLoadedState){
+              return   Column(
+                children: [
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
 
-                          ),
-                          children: [
-                            TextSpan(
-                                text: "In Process tasks",style: TextStyle(fontSize: 13,fontWeight: FontWeight.normal)
-                            )
-                          ]
-                      ),
+                          SizedBox(width: 15,),
+                          InkWell(
+                            onTap: (){
+                              showModalBottomSheet(
+                                //isDismissible: false,
+                                //enableDrag: false,
+                                  context: context,
+                                  builder: (_) {
+                                    return ShowModalBottom();
+                                  });
 
-                    ),
-                    SizedBox(width: 15,),
-                    InkWell(
-                      onTap: (){
-                        showModalBottomSheet(
-                          //isDismissible: false,
-                          //enableDrag: false,
-                            context: context,
-                            builder: (_) {
-                              return ShowModalBottom();
-                            });
-
-                      },
-                      child: CircleAvatar(
-                          radius: 50,
-                          backgroundImage:imgfile !=null? FileImage(imgfile!):null
-
-
-                      ),
-                    ),
-                    SizedBox(width: 15,),
-                    Text.rich(
-                      textAlign: TextAlign.center,
-
-                      TextSpan( text: "42\n",
-
-                          style: TextStyle(
-
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-
-                          ),
-                          children: [
-                            TextSpan(
-                                text: "Completed tasks",style: TextStyle(fontSize: 13,fontWeight: FontWeight.normal)
-                            )
-                          ]
-                      ),
-
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Column(
-                  children: [
-                    widget.username !=null?   Text(" ${widget.username}") :Text("user", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22 ),),
-                    SizedBox(height: 13,),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.redAccent,
-                            maximumSize: Size(200, 40),
-                            minimumSize: Size(150, 40),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(6),
+                            },
+                            child: CircleAvatar(
+                                radius: 50,
+                                backgroundImage:imgfile !=null? FileImage(imgfile!):null,
+                              backgroundColor: Colors.blue,
 
 
-                            )
-                        ),
-                        onPressed: ()async{
-                          SharedPreferences prefs=  await SharedPreferences.getInstance();
-                         // prefs.setBool('isLoggedIn', false);
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>LogInPage()));
-                        }, child: Text("Log out",style: TextStyle(color: Colors.white),)),
-                    SizedBox(height: 13,),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.redAccent,
-                            maximumSize: Size(150, 40),
-                            minimumSize: Size(150, 40),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(6),
-
-                            )
-                        ),
-                        onPressed: (){}, child: Text("Edit Profile",style: TextStyle(color: Colors.white),))
-                  ],
-                )
-              ],
-            ),
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(13),
-                  border: Border.all(
-                      width: 2,
-                      color: Colors.grey
-
-                  )
-              ),
-              margin: EdgeInsets.all(20),
-              padding: EdgeInsets.symmetric(horizontal: 19),
-              child:   InkWell(
-                child: ListTile(
-                  leading: Icon(Icons.account_circle),
-                  title: Text("My orders"),
-                  trailing: Icon(Icons.arrow_forward_ios_outlined),
-                ),
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (_)=>MyOrderPage()));
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-
-                  itemCount: profileitems.length,
-                  itemBuilder: (c,i){
-                    return Column(
-                      children: [
-
-
-                        Container(
-                          margin: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(13),
-                              border: Border.all(
-                                  width: 2,
-                                  color: Colors.grey
-
-                              )
-                          ),
-                          child: ListTile(
-
-                            shape: RoundedRectangleBorder(
-
-                                borderRadius: BorderRadius.circular(15,)
                             ),
-                            leading  : (profileitems[i]["prefix_icon"]),
-
-                            trailing:
-                            (profileitems[i]["suffix_icon"]),
-                            title: Text((profileitems[i]["name"])),
                           ),
+                          SizedBox(width: 15,),
+
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Column(
+                        children: [
+                          Text(state.data.data!.name!.toUpperCase()),
+
+                          //widget.username !=null?   Text(" ${widget.username}") :Text("user", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22 ),),
+                          SizedBox(height: 13,),
+                          ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.secondary,
+                                  maximumSize: Size(200, 40),
+                                  minimumSize: Size(150, 40),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(6),
+
+
+                                  )
+                              ),
+                              onPressed: ()async{
+                                SharedPreferences prefs=  await SharedPreferences.getInstance();
+                                // prefs.setBool('isLoggedIn', false);
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=>LogInPage()));
+                              }, child: Text("Log out",style: TextStyle(color: Colors.white),)),
+                          SizedBox(height: 13,),
+                          ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.secondary,
+                                  maximumSize: Size(150, 40),
+                                  minimumSize: Size(150, 40),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(6),
+
+                                  )
+                              ),
+            onPressed: () {
+            final themeManager = Provider.of<Theme_manager>(context, listen: false);
+            themeManager.changeTheme(!themeManager.getThemevalue()); // Toggle theme
+            },
+             child: Text("Dark Mode",style: TextStyle(color: Colors.white),))
+                        ],
+                      )
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(13),
+                          border: Border.all(
+                              width: 2,
+                              color: Colors.grey
+
+                          )
+                      ),
+                      //margin: EdgeInsets.all(20),
+                      padding: EdgeInsets.symmetric(horizontal: 19),
+                      child:   InkWell(
+                        child: ListTile(
+                          leading: Icon(Icons.account_circle),
+                          title: Text("My orders"),
+                          trailing: Icon(Icons.arrow_forward_ios_outlined),
                         ),
-                      ],
-                    );
-                  }),
-            )
-          ],
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (_)=>MyOrderPage()));
+                        },
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child:
+                   Container(
+                       decoration: BoxDecoration(
+                           borderRadius: BorderRadius.circular(13),
+                           border: Border.all(
+                               width: 2,
+                               color: Colors.grey
+
+                           )
+                       ),
+                       //margin: EdgeInsets.all(20),
+                       padding: EdgeInsets.symmetric(horizontal: 19),
+                     child:ListTile(
+                       leading: Icon(Icons.mail),
+                       title: Text(state.data.data!.email!,style: mTextStyle18(mFontWeight: FontWeight.w400),),
+                     )
+                   ),
+
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child:
+                    Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(13),
+                            border: Border.all(
+                                width: 2,
+                                color: Colors.grey
+
+                            )
+                        ),
+                       // margin: EdgeInsets.all(20),
+                        padding: EdgeInsets.symmetric(horizontal: 19),
+                        child:ListTile(
+                          leading: Icon(Icons.phone),
+
+                          title: Text(state.data.data!.mobile_number!),
+                        )
+                    ),
+
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child:
+                    Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(13),
+                            border: Border.all(
+                                width: 2,
+                                color: Colors.grey
+
+                            )
+                        ),
+                        //margin: EdgeInsets.all(20),
+                        padding: EdgeInsets.symmetric(horizontal: 19),
+                        child:ListTile(
+                          leading: Icon(Icons.password),
+                          title: Text(state.data.data!.password!,style: mTextStyle18(mFontWeight: FontWeight.w400),),
+                        )
+                    ),
+
+                  ),
+                ],
+              );
+            }
+            return Container();
+          },
+
+
         ),
       ),
 
