@@ -255,7 +255,7 @@ class _CartScreenState extends State<CartScreen> {
                   Center(
                     child: CustomButton(
                       width: double.infinity,
-                      text: 'Checkout',
+                      text: 'Place Order',
                       textStyle: TextStyle(fontSize: 20, color: Colors.white),
                       onPressed: () {
                         final cartState = context.read<ViewCartBloc>().state;

@@ -169,7 +169,7 @@ class _profilePageState extends State<profilePage> {
             final themeManager = Provider.of<Theme_manager>(context, listen: false);
             themeManager.changeTheme(!themeManager.getThemevalue()); // Toggle theme
             },
-             child: Text("Dark Mode",style: TextStyle(color: Colors.white),))
+             child: Text("Change Theme",style: TextStyle(color: Colors.white),))
                         ],
                       )
                     ],

@@ -94,7 +94,7 @@ Widget getCartItemWidget({
     padding: const EdgeInsets.all(8.0),
     height: 130,
     decoration: BoxDecoration(
-      //: Colors.white,
+
       borderRadius: BorderRadius.circular(15),
     ),
     child: Row(
