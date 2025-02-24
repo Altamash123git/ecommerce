@@ -98,7 +98,7 @@ class _CartScreenState extends State<CartScreen> {
                         ),
 
                         getTotalContainer(),
-                        //getBillingContainer()
+
                       ],
                     );
 

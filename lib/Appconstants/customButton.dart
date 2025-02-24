@@ -17,7 +17,7 @@ class CustomButton extends StatelessWidget {
     required this.onPressed,
     this.isLoading = false,
     this.loadingMsg = "",
-    this.width = 400,
+    this.width = 390,
     this.height = 50,
     this.color = const Color(0xFFFF660E), // Default to orange
     this.borderRadius = const BorderRadius.all(Radius.circular(25)),
@@ -50,7 +50,7 @@ class CustomButton extends StatelessWidget {
             CircularProgressIndicator(
 
             ),
-            SizedBox(width: 4,),
+
             Text(loadingMsg)
           ],
         ) : Text(

@@ -7,6 +7,7 @@ import 'package:ecommerce/UserData/UserProfileState.dart';
 import 'package:ecommerce/cart/cartBloc.dart';
 import 'package:ecommerce/create_order/create_order_bloc.dart';
 import 'package:ecommerce/getAllOrderBloc/getALLorderBloc.dart';
+import 'package:ecommerce/gobpRepository/bloc/userdata.dart';
 import 'package:ecommerce/registration/SigninPage.dart';
 import 'package:ecommerce/registration/registration_bloc.dart';
 import 'package:ecommerce/remote/api_helper.dart';
@@ -23,18 +24,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import 'Appconstants/Theme_manager.dart';
-
+import 'gobpRepository/bloc/bloc_implementation.dart';
+import 'gobpRepository/bloc/state.dart';
+import 'gobpRepository/repo.dart';
+import 'package:http/http.dart'as http;
 void main() {
   return runApp(
 
    MultiBlocProvider(providers: [
      BlocProvider<RegisterUserBloc>(create: (context)=>RegisterUserBloc(apiHelper: ApiHelper())),
-
+     //BlocProvider(create: (context) => OrderBloc(orderRepository: OrderRepository(client: http.Client()))),
      BlocProvider(create: (context)=>LoginBloc(apiHelper: ApiHelper())),
+     BlocProvider(create: (context) => OrderBloc(orderRepository: OrderRepository(client: http.Client()))),
 
      BlocProvider(create: (context)=>ProductBloc(apiHelper: ApiHelper())),
      BlocProvider(create: (context)=>CategoryBloc(apiHelper: ApiHelper())),
      BlocProvider(create: (context)=>CartBloc(apiHelper: ApiHelper())),
+     //BlocProvider(create: (context) => OrderCubit(OrderRepository(client: http.Client()))),
 
      BlocProvider(create: (context)=>ViewCartBloc(apiHelper: ApiHelper())),
      BlocProvider(create: (context)=>CreateOrderBloc(apiHelper: ApiHelper())),
@@ -62,7 +68,7 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData(
         brightness: Brightness.dark,
       ),
-      home:SplashPage(),
+      home:MyOrdersScreen(),
     );
   }
 }

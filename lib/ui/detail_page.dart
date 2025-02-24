@@ -674,11 +674,11 @@ class _DetailPageState extends State<DetailPage> {
                       text: 'Add to Cart',
                       isLoading: isLoading,
                       loadingMsg: "Adding to Cart..",
-                      textStyle: TextStyle(fontSize: 14, color: Colors.white),
+                      textStyle: TextStyle(fontSize: 12, color: Colors.white),
                       onPressed: () {
                         context.read<CartBloc>().add(AddToCartEvent(
                             productId: int.parse(widget.currentProduct.id!),
-                            qty: qty));
+                             qty: qty));
                       }),
                 ))
           ],
